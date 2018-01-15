@@ -158,7 +158,7 @@ class EmailMessage(object):
 	def deal_with_attachments(self, envelope):
 
 		for a in self.attachments:
-			if not self.mtype == 'text' and self.msubtype == 'plain':
+			if not self.mtype == 'text':
 				raise ValueError('mime type not yet supported: %s' % (self.mime_type))
 				continue
 			with open(a, 'rb') as fh:
@@ -194,7 +194,8 @@ class EmailMessage(object):
 		"""
 
 		envelope = self.create_envelope()
-		envelope.attach(MIMEText(self.body))
+		part = MIMEText(self.body, self.msubtype)
+		envelope.attach(part)
 		envelope = self.deal_with_attachments(envelope)
 
 		smtp = smtplib.SMTP(self.server)
@@ -208,9 +209,9 @@ if __name__ == "__main__":
 	"""
 
 	em = EmailMessage(
-		subj="test3", 
-		body="see attachment", 
+		subj="something", 
+		body="<p>hello</p><p>there</p>", 
 		to="recipient@domain", 
 		fro="sender@domain",
-		attachments=[ 'file.txt' ]
+		mime_type='text/html',
 		).send()

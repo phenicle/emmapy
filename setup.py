@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='emmapy',
-      version='0.1',
+      version='0.1.1',
       description='Python simple SMTP E-mail module',
       url='http://github.com/phenicle/emmapy',
       author='Phenicle Beefheart',
